@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+from camera import Camera
 from player import Player
 
 
@@ -17,6 +18,9 @@ def main():
     # Initialise player object and sprite
     player = Player()
     player_sprite = pygame.sprite.RenderPlain(player)
+
+    camera = Camera(screen.get_width(), screen.get_height())
+
     level_data, generator = generate_level(1)
 
     # Blit background to the screen
@@ -38,6 +42,8 @@ def main():
                     player.jump()
 
         screen.blit(background, (0, 0))
+
+        camera.update(player, generator.width, generator.height, generator.tile_size)
 
         player_sprite.update()
         player_sprite.draw(screen)
