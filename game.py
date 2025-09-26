@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+from player import Player
 
 
 def main():
@@ -12,6 +13,11 @@ def main():
     background = pygame.Surface(screen.get_size())
     background = background.convert()
     background.fill("#5a6d1e")
+
+    # Initialise player object and sprite
+    player = Player()
+    player_sprite = pygame.sprite.RenderPlain(player)
+    level_data, generator = generate_level(1)
 
     # Blit background to the screen
     screen.blit(background, (0, 0))
@@ -26,6 +32,10 @@ def main():
         for event in events:
             if event.type == pygame.QUIT:
                 return
+
+            elif event.type == KEYDOWN:
+                if event.key == K_UP:
+                    player.jump()
 
         screen.blit(background, (0, 0))
 
