@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 from camera import Camera
+from level_generator import LevelGenerator
 from player import Player
 
 
@@ -42,6 +43,7 @@ def main():
                     player.jump()
 
         screen.blit(background, (0, 0))
+        generator.render_level(level_data, screen, camera.x, camera.y)
 
         camera.update(player, generator.width, generator.height, generator.tile_size)
 
@@ -50,6 +52,15 @@ def main():
 
         pygame.display.flip()
 
+
+def generate_level(level_number):
+
+    generator = LevelGenerator(60 + level_number * 10, 25)
+    difficulty = min(level_number, 3)
+
+    level_data = generator.create_level(difficulty)
+
+    return level_data, generator
 
 
 if __name__ == "__main__":
